@@ -11,4 +11,9 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.10.1'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.10.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.1'
+    implementation 'commons-codec:commons-codec:1.15'
+    implementation 'commons-io:commons-io:2.11.0'
 }
