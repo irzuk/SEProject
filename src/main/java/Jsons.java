@@ -10,9 +10,9 @@ public class Jsons {
         return objectMapper.readValue(new URL("file:///" + file), Recipe.class);
     }
 
-    static public void toJson(String file) throws IOException {
+    static public void toJson(Recipe rec, String file) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.writeValue(new File(file), Recipe.class);
+        objectMapper.writeValue(new File(file), rec);
     }
 
     static public Recipies getAllFromJson(String file) throws IOException {
@@ -20,8 +20,8 @@ public class Jsons {
         return objectMapper.readValue(new URL("file:///" + "recipes.json"), Recipies.class);
     }
 
-    static public void allToJson(String file) throws IOException {
+    static public void allToJson(Recipies recs, String file) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.writeValue(new File(file), Recipies.class);
+        objectMapper.writeValue(new File(file), recs);
     }
 }
