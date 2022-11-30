@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CookbookFuncs {
-    public List<Recipe> SearchIngridients(List<Recipe> recs, List<Ingridient> ings) {
+    static public List<Recipe> SearchIngridients(List<Recipe> recs, List<Ingridient> ings) {
         List<Recipe> final_recs = new ArrayList<>();
         for (Recipe rec : recs) {
             boolean flag = true;
@@ -18,7 +18,7 @@ public class CookbookFuncs {
         return final_recs;
     }
 
-    private Boolean hasIngridient(Recipe rec, Ingridient ing) {
+    static private Boolean hasIngridient(Recipe rec, Ingridient ing) {
         for (Ingridient i : rec.ingridients) {
             if (i.equals(ing)) {
                 return true;

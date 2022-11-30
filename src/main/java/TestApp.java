@@ -66,4 +66,53 @@ public class TestApp {
         assertEquals(read_rec.ingridients.get(0).amount, 228);
         assertEquals(read_rec.ingridients.get(0).unit, "sugoma");
     }
+
+    @Test
+    public void SearchIngTest() {
+        Ingridient ing1 = new Ingridient();
+        ing1.name = "aboba";
+        ing1.amount = 1;
+
+        Ingridient ing2 = new Ingridient();
+        ing1.name = "sugoma";
+        ing1.amount = 2;
+
+        Ingridient ing3 = new Ingridient();
+        ing1.name = "amogus";
+        ing1.amount = 3;
+
+        Ingridient ing4 = new Ingridient();
+        ing1.name = "bubibu";
+        ing1.amount = 4;
+
+        Recipe recipe1 = new Recipe();
+        recipe1.name = "rec1";
+        recipe1.instruction = "inst1";
+        List<Ingridient> ings1 = new ArrayList<>();
+        ings1.add(ing1);
+        ings1.add(ing2);
+        ings1.add(ing3);
+        recipe1.ingridients = ings1;
+
+        Recipe recipe2 = new Recipe();
+        recipe2.name = "rec2";
+        recipe2.instruction = "inst2";
+        List<Ingridient> ings2 = new ArrayList<>();
+        ings2.add(ing2);
+        ings2.add(ing3);
+        ings2.add(ing4);
+        recipe2.ingridients = ings2;
+
+        List<Recipe> recs = new ArrayList<>();
+        recs.add(recipe1);
+        recs.add(recipe2);
+
+        List<Ingridient> search = new ArrayList<>();
+        search.add(ing2);
+        search.add(ing3);
+
+        List<Recipe> ans = CookbookFuncs.SearchIngridients(recs, search);
+
+        assertEquals(ans, recs);
+    }
 }
