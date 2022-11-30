@@ -14,4 +14,13 @@ public class CookbookFuncs {
         }
         return final_recs;
     }
+
+    private Boolean hasIngridient(Recipe rec, Ingridient ing) {
+        for (Ingridient i : rec.ingridients) {
+            if (i.equals(ing)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
