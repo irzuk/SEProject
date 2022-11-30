@@ -6,12 +6,8 @@ import java.net.URL;
 
 public class Jsons {
 
-    static String workDir = "/Users/irzuk/Documents/Studying/SE/Project/";
-
-  /*  Jsons() {
-        File projectDir = new File("./metainf/");
-        workDir = projectDir.getAbsolutePath();
-    } */
+    //static String workDir = "/Users/irzuk/Documents/Studying/SE/Project/";
+    static String workDir = "/home/krestino4ka/SEProject/";
 
     static public Recipe getFromJson(String file) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -27,7 +23,7 @@ public class Jsons {
 
     static public Recipies getAllFromJson(String file) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(new File(workDir + "recipes.json"), Recipies.class);
+        return objectMapper.readValue(new File(workDir + file), Recipies.class);
     }
 
     static public String allToJson(Recipies recs, String file) throws IOException {
