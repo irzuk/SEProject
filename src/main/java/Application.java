@@ -19,6 +19,12 @@ public class Application extends Frame {
     AddRec add = null;
     ShowRec show = null;
 
+    Label ingred = null;
+    private TextField ingToFind;
+    private Button findRec;
+
+    private Button showAllRec;
+
     public Application() throws IOException {
         setLayout(new FlowLayout());
 
@@ -46,10 +52,28 @@ public class Application extends Frame {
 
         add(listOfRec);
 
+        ingred = new Label("Поиск по ингредиенту:");
+        add(ingred);
+
+        ingToFind = new TextField(20);
+        add(ingToFind);
+
+        showAllRec = new Button("Показать все рецепты");
+        BtnShowAllListener a = new BtnShowAllListener();
+        showAllRec.addActionListener(a);
+        add(showAllRec);
+
+
+        findRec = new Button("Найти рецепты");
+        add(findRec);
+        BtnFindListener findR = new BtnFindListener();
+        findRec.addActionListener(findR);
+
+
         setSize(450, 450);
         setVisible(true);
     }
-    
+
     public static void main(String[] args) throws IOException {
         Application app = new Application();
     }
@@ -58,6 +82,21 @@ public class Application extends Frame {
         @Override
         public void actionPerformed(ActionEvent evt) {
             add = new AddRec();
+        }
+    }
+
+    private class BtnShowAllListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            try {
+                list = Jsons.getAllFromJson("recipes.json");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            listOfRec.removeAll();
+            for (String r : list.names) {
+                listOfRec.add(r);
+            }
         }
     }
 
@@ -70,6 +109,35 @@ public class Application extends Frame {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private class BtnFindListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            Recipies reps = null;
+            try {
+                reps = Jsons.getAllFromJson("recipes.json");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            java.util.List<Recipe> recs = new ArrayList<>();
+            for (String r : reps.names) {
+                try {
+                    recs.add(Jsons.getFromJson(r + ".json"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            java.util.List<Recipe> recipes = CookbookFuncs.SearchIngridient(recs, ingToFind.getText());
+
+            listOfRec.removeAll();
+
+                for (Recipe r : recipes) {
+                    listOfRec.add(r.name);
+                }
+
+            //add(listOfRec);
         }
     }
 
@@ -102,6 +170,11 @@ public class Application extends Frame {
             desc.setText(r.instruction);
             add(desc);
 
+            for(Ingridient i : r.ingridients){
+                Label ingr = new Label(i.name + " " + i.amount + " " + i.amount);
+                add(ingr);
+            }
+
             setSize(600, 600);
             setVisible(true);
         }
@@ -116,8 +189,11 @@ public class Application extends Frame {
 
         private Button btnSave;
 
-        AddRec() {
+        java.util.List<TextField> name = new ArrayList<TextField>(6);
+        java.util.List<TextField> amount = new ArrayList<TextField>(6);
+        java.util.List<TextField> unit = new ArrayList<TextField>(6);
 
+        AddRec() {
             setLayout(new FlowLayout());
 
             lblCount = new Label("Добавление рецепта");
@@ -132,7 +208,7 @@ public class Application extends Frame {
             lblName = new Label("Название");
             add(lblName);
 
-            tfName = new TextField();
+            tfName = new TextField(20);
             add(tfName);
 
             lblDesc = new Label("Описание");
@@ -140,6 +216,15 @@ public class Application extends Frame {
 
             desc = new TextArea();
             add(desc);
+
+            for(int i = 0; i < 7; i++) {
+                name.add(new TextField(20));
+                add(name.get(i));
+                amount.add(new TextField(20));
+                add(amount.get(i));
+                unit.add(new TextField(20));
+                add(unit.get(i));
+            }
 
             setSize(600, 600);
             setVisible(true);
@@ -151,6 +236,17 @@ public class Application extends Frame {
                 Recipe r = new Recipe();
                 r.name = tfName.getText();
                 r.instruction = desc.getText();
+                java.util.List<Ingridient> ingrs = new ArrayList<>();
+                for(int i = 0; i < 7; i++) {
+                    if(!name.get(i).getText().equals("")) {
+                        Ingridient in = new Ingridient();
+                        in.amount = Integer.getInteger(amount.get(i).getText());
+                        in.name = name.get(i).getText();
+                        in.unit = unit.get(i).getText();
+                        ingrs.add(in);
+                    }
+                }
+                r.ingridients = ingrs;
                 try {
                     Jsons.toJson(r, r.name + ".json");
                 } catch (IOException e) {
@@ -171,6 +267,5 @@ public class Application extends Frame {
                 }
             }
         }
-
     }
 }
