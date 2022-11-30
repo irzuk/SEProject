@@ -17,4 +17,9 @@ public class TestApp {
         assertTrue(recipe1.name.equals("kek"));
         assertTrue(recipe1.instruction.equals("lol"));
     }
+
+    @Test
+    public void addNewRecipe() {
+
+    }
 }

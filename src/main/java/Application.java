@@ -19,20 +19,16 @@ public class Application extends Frame {
     AddRec add = null;
     ShowRec show = null;
 
-    // Constructor to setup GUI components and event handlers
     public Application() throws IOException {
         setLayout(new FlowLayout());
-        // "super" Frame, which is a Container, sets its layout to FlowLayout to arrange
-        // the components from left-to-right, and flow to next row from top-to-bottom.
 
-        lblCount = new Label("Книга рецептов");  // construct the Label component
-        add(lblCount);                    // "super" Frame container adds Label component
+        lblCount = new Label("Книга рецептов");
+        add(lblCount);
 
+        btnShow = new Button("Посмотреть рецепт");
+        add(btnShow);
 
-        btnShow = new Button("Посмотреть рецепт");   // construct the Button component
-        add(btnShow);                    // "super" Frame container adds Button component
-
-        btnAdd = new Button("Добавить рецепт");   // construct the Button component
+        btnAdd = new Button("Добавить рецепт");
         add(btnAdd);
 
         BtnShowListener listenerAdd = new BtnShowListener();
@@ -46,24 +42,19 @@ public class Application extends Frame {
 
         for (String r : list.names) {
             listOfRec.add(r);
-         }
+        }
 
         add(listOfRec);
 
         setSize(450, 450);
-        setVisible(true);         // "super" Frame shows
+        setVisible(true);
     }
-
-    // The entry main() method
+    
     public static void main(String[] args) throws IOException {
-        // Invoke the constructor to setup the GUI, by allocating an instance
         Application app = new Application();
-        // or simply "new AWTCounter();" for an anonymous instance
     }
 
-    // Define an inner class to handle the "Count" button-click
     private class BtnAddListener implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent evt) {
             add = new AddRec();
@@ -85,7 +76,7 @@ public class Application extends Frame {
     private class ShowRec extends Frame {
         private Label lblCount;
         private Label lblName;
-        private Label lblDesc;// Declare a Label component
+        private Label lblDesc;
         private TextField tfName;
         private TextArea desc;
 
@@ -94,10 +85,10 @@ public class Application extends Frame {
 
             setLayout(new FlowLayout());
 
-            lblCount = new Label("Добавление рецепта");  // construct the Label component
-            add(lblCount);                    // "super" Frame container adds Label component
+            lblCount = new Label("Просмотр рецепта");
+            add(lblCount);
 
-            lblName = new Label("Название");  // construct the Label component
+            lblName = new Label("Название");
             add(lblName);
 
             tfName = new TextField();
@@ -119,7 +110,7 @@ public class Application extends Frame {
     private class AddRec extends Frame {
         private Label lblCount;
         private Label lblName;
-        private Label lblDesc;// Declare a Label component
+        private Label lblDesc;
         private TextField tfName;
         private TextArea desc;
 
@@ -129,22 +120,22 @@ public class Application extends Frame {
 
             setLayout(new FlowLayout());
 
-            lblCount = new Label("Добавление рецепта");  // construct the Label component
-            add(lblCount);                    // "super" Frame container adds Label component
+            lblCount = new Label("Добавление рецепта");
+            add(lblCount);
 
-            btnSave = new Button("Сохранить рецепт");   // construct the Button component
-            add(btnSave);                    // "super" Frame container adds Button component
+            btnSave = new Button("Сохранить рецепт");
+            add(btnSave);
 
             BtnSaveListener listenerSave = new BtnSaveListener();
             btnSave.addActionListener(listenerSave);
 
-            lblName = new Label("Название");  // construct the Label component
+            lblName = new Label("Название");
             add(lblName);
 
             tfName = new TextField();
             add(tfName);
 
-            lblDesc = new Label("Описание");  // construct the Label component
+            lblDesc = new Label("Описание");
             add(lblDesc);
 
             desc = new TextArea();
@@ -157,9 +148,9 @@ public class Application extends Frame {
         private class BtnSaveListener implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                 Recipe r = new Recipe();
-                 r.name = tfName.getText();
-                 r.instruction = desc.getText();
+                Recipe r = new Recipe();
+                r.name = tfName.getText();
+                r.instruction = desc.getText();
                 try {
                     Jsons.toJson(r, r.name + ".json");
                 } catch (IOException e) {
